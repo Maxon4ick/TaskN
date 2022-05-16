@@ -1,0 +1,11 @@
+fid = fopen('am_sound (1).dat','rb');
+s = fread(fid,[2,inf],'int32');
+s = s';
+fs = 12e3;
+[b,a] = butter(6,12e3/pi/16e3);
+com = s(:,1)+1i*s(:,2);
+detector = abs(com);
+out = filtfilt(b,a,detector);
+out = out-3.2e5;
+sound(out,fs);
+fclose(fid);
